@@ -1,0 +1,6 @@
+stages {
+   stage("ci") {
+   zip -r index.html-$BUILD_NUMBER.zip .  
+   aws s3 cp index.html 
+   }
+}
