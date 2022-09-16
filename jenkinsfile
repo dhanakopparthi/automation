@@ -1,6 +1,12 @@
 stages {
    stage("ci") {
-   zip -r index.html-$BUILD_NUMBER.zip .  
-   aws s3 cp index.html 
+   sh 'zip -r helloworld.html-$BUILD_NUMBER.zip *'  
+   sh 'aws s3 cp helloworld.html-$BUILD_NUMBER.zip s3://artifactory-html/'
+   }
+   stage("cd"){
+      sh 'rm -fr *'
+sh 'aws s3 cp s3://artifactory-html/my-world.html-$PKG.zip .'
+sh 'unzip my-world.html-$PKG.zip' 
+sh 'scp my-world.html root@172.31.2.233:/var/www/html/'
    }
 }
